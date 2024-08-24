@@ -16,7 +16,11 @@ async function main(argvRaw): Promise<void> {
 		domain: argv.domain,
 	})
 
-	run(repoId, ops)
+	try {
+		console.log(run(repoId, ops))
+	} catch (err) {
+		console.log(err.message)
+	}
 }
 
 main(process.argv.slice(2))

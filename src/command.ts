@@ -5,13 +5,15 @@ type Option = {
 	domain?: string
 }
 
-export function run(urlRaw: string, ops: Option = {}) {
+export function run(urlRaw: string, ops: Option = {}): CloneSshUrl {
 	if (!is.nonEmptyString(urlRaw)) {
 		throw new Error('Given url must be fill string')
 	}
 
 	const cloneSshUrl = CloneSshUrl.fromId(urlRaw)
-	// TODO: remove next line
-	ops.domain = ops.domain || 'github.com'
+	if (!ops.domain) {
+		return cloneSshUrl
+	}
+
 	return CloneSshUrl.changeDomain(cloneSshUrl, ops.domain)
 }

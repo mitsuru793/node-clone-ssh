@@ -3,7 +3,7 @@ import { trim } from '../util'
 import { RepoIdName } from './repoIdName'
 import { SshUrl } from './sshUrl'
 
-type CloneSshUrl = string & { readonly brancd: unique symbol }
+export type CloneSshUrl = string & { readonly brancd: unique symbol }
 
 type ParsedCloneSshUrl = Readonly<{
 	author: string
