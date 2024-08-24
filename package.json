@@ -1,0 +1,15 @@
+{
+  "name": "clone-ssh",
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "fmt": "npx @biomejs/biome check --write ./src"
+  },
+  "dependencies": {
+    "@sindresorhus/is": "^7.0.0"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.8.3",
+    "vitest": "^2.0.5"
+  }
+}
