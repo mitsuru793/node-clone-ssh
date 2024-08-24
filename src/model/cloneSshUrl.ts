@@ -1,7 +1,7 @@
 import is, { assert } from '@sindresorhus/is'
 import { trim } from '../util'
-import { type SshUrl, isSshUrl, parseSshUrl } from './sshUrl'
 import { RepoIdName } from './repoIdName'
+import { SshUrl } from './sshUrl'
 
 type CloneSshUrl = string
 
@@ -35,7 +35,7 @@ export function isGithubRepoHttpUrl(url: URL): boolean {
 }
 
 export function createCloneSshUrlFromSshUrl(sshUrl: SshUrl): CloneSshUrl {
-	const { author, repoName } = parseSshUrl(sshUrl)
+	const { author, repoName } = SshUrl.parse(sshUrl)
 	return createCloneSshUrl(author, repoName)
 }
 
@@ -49,7 +49,7 @@ export function createCloneSshUrlFromId(id: string): CloneSshUrl {
 		return createCloneSshUrlFromHttp(id)
 	}
 
-	if (isSshUrl(id)) {
+	if (SshUrl.is(id)) {
 		return createCloneSshUrlFromSshUrl(id)
 	}
 

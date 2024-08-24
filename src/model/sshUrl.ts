@@ -1,30 +1,28 @@
 import { assert } from '@sindresorhus/is'
 
-export type SshUrl = string
+export type SshUrl = string & { readonly brannd: unique symbol }
+
+type ParsedSshUrl = Readonly<{
+	author: string
+	repoName: string
+}>
 
 const regexp = new RegExp('^git@github.com:([^/]+)/([^/]+).git$')
 
-export function isSshUrl(url: string): url is SshUrl {
-	try {
-		return !!parseSshUrl(url)
-	} catch (_) {
-		return false
-	}
-}
+export const SshUrl = {
+	is(value: string): value is SshUrl {
+		return regexp.test(value)
+	},
 
-type ParsedSshUrl = {
-	author: string
-	repoName: string
-}
+	parse(url: SshUrl): ParsedSshUrl {
+		const matched = url.match(regexp)
+		if (!matched) {
+			throw new Error(`Failed to parse sshUrl: ${url}`)
+		}
 
-export function parseSshUrl(url: SshUrl): ParsedSshUrl {
-	const matched = url.match(regexp)
-	if (!matched) {
-		throw new Error(`Failed to parse sshUrl: ${url}`)
-	}
-
-	const [_, author, repoName] = matched
-	assert.nonEmptyString(author)
-	assert.nonEmptyString(repoName)
-	return { author, repoName }
+		const [_, author, repoName] = matched
+		assert.nonEmptyString(author)
+		assert.nonEmptyString(repoName)
+		return { author, repoName }
+	},
 }
