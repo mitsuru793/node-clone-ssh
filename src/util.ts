@@ -8,3 +8,10 @@ export function trim(target: string, remove: string): string {
 
 	return matched[1]
 }
+
+export function compactObject<T extends object>(obj: T): Partial<T> {
+	const entries = Object.entries(obj).filter(
+		([key, value]) => value !== undefined,
+	)
+	return Object.fromEntries(entries) as Partial<T>
+}
