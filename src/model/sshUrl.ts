@@ -3,11 +3,12 @@ import { assert } from '@sindresorhus/is'
 export type SshUrl = string & { readonly brannd: unique symbol }
 
 type ParsedSshUrl = Readonly<{
+	domain: string
 	author: string
 	repoName: string
 }>
 
-const regexp = new RegExp('^git@github.com:([^/]+)/([^/]+).git$')
+const regexp = new RegExp('^git@([a-z.]+):([^/]+)/([^/]+).git$')
 
 export const SshUrl = {
 	is(value: string): value is SshUrl {
@@ -20,9 +21,9 @@ export const SshUrl = {
 			throw new Error(`Failed to parse sshUrl: ${url}`)
 		}
 
-		const [_, author, repoName] = matched
+		const [_, domain, author, repoName] = matched
 		assert.nonEmptyString(author)
 		assert.nonEmptyString(repoName)
-		return { author, repoName }
+		return { domain, author, repoName }
 	},
 }

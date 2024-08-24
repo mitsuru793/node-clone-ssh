@@ -13,8 +13,7 @@ type ParsedCloneSshUrl = Readonly<{
 const regexp = new RegExp('^git@github.com:([^/]+)/([^/]+).git$')
 
 export const CloneSshUrl = {
-	// TODO: make arg domain not be optional
-	create(author: string, repoName: string, domain = 'github.com'): CloneSshUrl {
+	create(domain: string, author: string, repoName: string): CloneSshUrl {
 		return `git@${domain}:${author}/${repoName}.git` as CloneSshUrl
 	},
 
@@ -41,22 +40,22 @@ export const CloneSshUrl = {
 		}
 
 		const [author, repoName] = trim(url.pathname, '/').split('/')
-		return CloneSshUrl.create(author, repoName)
+		return CloneSshUrl.create(url.host, author, repoName)
 	},
 
 	fromSshUrl(sshUrl: SshUrl): CloneSshUrl {
-		const { author, repoName } = SshUrl.parse(sshUrl)
-		return CloneSshUrl.create(author, repoName)
+		const { domain, author, repoName } = SshUrl.parse(sshUrl)
+		return CloneSshUrl.create(domain, author, repoName)
 	},
 
 	fromRepoIdName(name: RepoIdName): CloneSshUrl {
 		const [author, repoName] = RepoIdName.parse(name)
-		return CloneSshUrl.create(author, repoName)
+		return CloneSshUrl.create('github.com', author, repoName)
 	},
 
 	changeDomain(url: CloneSshUrl, domain: string): CloneSshUrl {
 		const { author, repoName } = CloneSshUrl.parse(url)
-		return CloneSshUrl.create(author, repoName, domain)
+		return CloneSshUrl.create(domain, author, repoName)
 	},
 
 	parse(url: CloneSshUrl): ParsedCloneSshUrl {
