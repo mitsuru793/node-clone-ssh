@@ -1,22 +1,31 @@
 import { assert } from '@sindresorhus/is'
 
-export type RepoIdName = string
+export type RepoIdName = string & { readonly brand: unique symbol }
 
 const regexp = new RegExp('^([^/]+)/([^/]+)$')
 
-export function isRepoIdName(url: string): url is RepoIdName {
-	return regexp.test(url)
-}
+export const RepoIdName = {
+	of(value: string): RepoIdName {
+		if (!RepoIdName.is(value)) {
+			throw new Error(`RepoIdName must be format(author/repo): ${value}`)
+		}
+		return value
+	},
 
-export function parseRepoIdName(url: RepoIdName): [string, string] {
-	const matched = url.match(regexp)
-	if (!matched) {
-		throw new Error('Not match RepoIdName')
-	}
+	is(value: string): value is RepoIdName {
+		return regexp.test(value)
+	},
 
-	const [_, author, repoName] = matched
-	assert.nonEmptyString(author)
-	assert.nonEmptyString(repoName)
+	parse(idName: RepoIdName): [string, string] {
+		const matched = idName.match(regexp)
+		if (!matched) {
+			throw new Error(`Failed to parse RepoIdName: ${idName}`)
+		}
 
-	return [author, repoName]
+		const [_, author, repoName] = matched
+		assert.nonEmptyString(author)
+		assert.nonEmptyString(repoName)
+
+		return [author, repoName]
+	},
 }

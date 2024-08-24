@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { isRepoIdName } from './repoIdName'
+import { RepoIdName } from './repoIdName'
 
 describe('isRepoIdName', () => {
 	test.each([
@@ -16,7 +16,7 @@ describe('isRepoIdName', () => {
 		[false, 'repo/'],
 		[false, '/repo/'],
 	])('return %o when given %s', (expected, input) => {
-		const result = isRepoIdName(input)
+		const result = RepoIdName.is(input)
 		expect(result).toBe(expected)
 	})
 })
