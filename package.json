@@ -1,6 +1,7 @@
 {
-	"name": "clone-ssh",
+	"name": "@mitsuru793/clone-ssh",
 	"type": "module",
+	"version": "0.1.0",
 	"bin": {
 		"clone-ssh": "./dist/cli.js"
 	},
@@ -9,6 +10,7 @@
 		"fmt": "npx @biomejs/biome check --write ./src",
 		"build": "esbuild bin/cli.ts --bundle --outdir=dist"
 	},
+	"files": ["dist"],
 	"dependencies": {
 		"@sindresorhus/is": "^7.0.0",
 		"minimist": "^1.2.8"
