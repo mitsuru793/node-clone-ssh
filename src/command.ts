@@ -9,7 +9,7 @@ type Option = {
 }
 
 export function run(urlRaw: string, ops: Option = {}) {
-	if (is.emptyString(urlRaw)) {
+	if (!is.nonEmptyString(urlRaw)) {
 		throw new Error('Given url must be fill string')
 	}
 
