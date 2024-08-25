@@ -30,6 +30,16 @@ describe('when given url is github repository url', () => {
 		const result = run(url)
 		expect(result).toEqual('git@github.com:mike/repo.git')
 	})
+
+	test('return sshCloneUrl with given prefixed', () => {
+		const url = 'https://github.com/mike/repo'
+		expect(run(url, { prefixDomain: 'pre.' })).toEqual(
+			'git@pre.github.com:mike/repo.git',
+		)
+		expect(run(url, { prefixDomain: 'pre' })).toEqual(
+			'git@pregithub.com:mike/repo.git',
+		)
+	})
 })
 
 describe('when given url is ssh url', () => {
@@ -44,6 +54,16 @@ describe('when given url is ssh url', () => {
 		const result = run(url)
 		expect(result).toEqual('git@github.com:mike/repo.git')
 	})
+
+	test('return sshCloneUrl with given prefixed', () => {
+		const url = 'git@github.com:mike/repo.git'
+		expect(run(url, { prefixDomain: 'pre.' })).toEqual(
+			'git@pre.github.com:mike/repo.git',
+		)
+		expect(run(url, { prefixDomain: 'pre' })).toEqual(
+			'git@pregithub.com:mike/repo.git',
+		)
+	})
 })
 
 describe('when given url is repository id name(ex: author/mike)', () => {
@@ -57,5 +77,15 @@ describe('when given url is repository id name(ex: author/mike)', () => {
 		const url = 'mike/repo'
 		const result = run(url)
 		expect(result).toEqual('git@github.com:mike/repo.git')
+	})
+
+	test('return sshCloneUrl with given prefixed', () => {
+		const url = 'mike/repo'
+		expect(run(url, { prefixDomain: 'pre.' })).toEqual(
+			'git@pre.github.com:mike/repo.git',
+		)
+		expect(run(url, { prefixDomain: 'pre' })).toEqual(
+			'git@pregithub.com:mike/repo.git',
+		)
 	})
 })

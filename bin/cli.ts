@@ -4,16 +4,18 @@ import { compactObject } from '../src/util'
 
 type Option = {
 	domain?: string
+	domainPrefix: string
 }
 
 async function main(argvRaw): Promise<void> {
 	const argv = minimist<Option>(argvRaw, {
-		string: ['domain'],
+		string: ['domain', 'domainPrefix'],
 	})
 	const [repoId] = argv._
 
 	const ops = compactObject({
 		domain: argv.domain,
+		prefixDomain: argv['domain-prefix'],
 	})
 
 	try {

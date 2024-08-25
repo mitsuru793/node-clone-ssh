@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest'
-import { isGithubRepoHttpUrl } from './cloneSshUrl'
+import { CloneSshUrl, isGithubRepoHttpUrl } from './cloneSshUrl'
 
 describe('isGithubRepoHttpUrl', () => {
 	test.each([
@@ -11,6 +11,24 @@ describe('isGithubRepoHttpUrl', () => {
 	])('return %o when given %s', (expected, urlRaw) => {
 		const url = new URL(urlRaw)
 		const result = isGithubRepoHttpUrl(url)
+		expect(result).toBe(expected)
+	})
+})
+
+describe('prefixDomain', () => {
+	test.each([
+		[
+			CloneSshUrl.create('github.com', 'mike', 'example'),
+			'pre.',
+			'git@pre.github.com:mike/example.git',
+		],
+		[
+			CloneSshUrl.create('github.com', 'mike', 'example'),
+			'pre',
+			'git@pregithub.com:mike/example.git',
+		],
+	])('prefix %s with %s', (url, prefix, expected) => {
+		const result = CloneSshUrl.prefixDomain(url, prefix)
 		expect(result).toBe(expected)
 	})
 })
