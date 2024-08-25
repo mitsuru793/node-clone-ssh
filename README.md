@@ -3,7 +3,9 @@
 You can generate url for ssh from github repository. This is useful when you can switch account with ssh.
 
 ```
-git clone (clone-ssh-url --domain-prefix mike. https://github.com/mike/repo)
+git clone $(clone-ssh-url --domain-prefix mike. https://github.com/mike/repo)
+
+git clone $(npx --package=@mitsuru793/clone-ssh clone-ssh-url)
 ```
 
 ## How to use
