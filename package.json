@@ -11,6 +11,7 @@
 		"build": "esbuild bin/cli.ts --bundle --outdir=dist"
 	},
 	"files": ["dist"],
+	"repository": "github:mitsuru793/node-clone-ssh",
 	"dependencies": {
 		"@sindresorhus/is": "^7.0.0",
 		"minimist": "^1.2.8"
