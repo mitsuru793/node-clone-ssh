@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import minimist from 'minimist'
 import { run } from '../src/command'
 import { compactObject } from '../src/util'
