@@ -3,7 +3,7 @@
 	"type": "module",
 	"version": "0.1.0",
 	"bin": {
-		"clone-ssh": "./dist/cli.js"
+		"clone-ssh-url": "./dist/cli.js"
 	},
 	"scripts": {
 		"test": "vitest",
